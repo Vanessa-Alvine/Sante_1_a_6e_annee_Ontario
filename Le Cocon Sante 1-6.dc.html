@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-a9cd6657-f2d1-4ddf-aad6-82c2b0f01a52/styles.css">
+<script src="_ds/broadsheet-a9cd6657-f2d1-4ddf-aad6-82c2b0f01a52/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);line-height:1.55}
+  a{color:#157A42;text-decoration:none}
+  a:hover{color:#C13A70}
+  *:focus-visible{outline:2px solid #157A42;outline-offset:2px}
+  .goog-te-banner-frame,.skiptranslate iframe{display:none!important}
+  body{top:0!important}
+  #gt .goog-te-gadget{font-family:var(--font-body);font-size:0;line-height:0;white-space:nowrap}
+  #gt .goog-te-gadget img,#gt .goog-te-gadget>span{display:none!important}
+  #gt .goog-logo-link{display:none!important}
+  #gt .goog-te-gadget .goog-te-combo{font-family:var(--font-body);font-size:14px;padding:4px 6px;border:1px solid var(--color-neutral-400);background:#fff;color:var(--color-text);border-radius:2px}
+  .sheet .cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:30px 46px;align-items:start}
+  @media (max-width:1000px){
+    .sheet{padding-left:18px!important;padding-right:18px!important}
+  }
+  @media (max-width:620px){
+    .rail{width:min(84vw,300px)!important;flex-basis:min(84vw,300px)!important}
+    .sheet h1{font-size:32px!important}
+    .topbar{padding:8px 14px!important;gap:8px!important}
+  }
+  @media print{
+    .no-print{display:none!important}
+    body{background:#fff}
+    .sheet{padding:0!important}
+    @page{margin:16mm}
+  }
+</style>
+<script>
+window.googleTranslateElementInit=function(){
+  var host=document.getElementById('gt');
+  if(!host||host.getAttribute('data-ready')==='1') return;
+  host.setAttribute('data-ready','1');
+  try{new google.translate.TranslateElement({pageLanguage:'fr',includedLanguages:'am,ar,bn,de,en,es,fa,ha,hi,ht,it,ja,ko,ln,ne,pa,pl,pt,ro,ru,rw,so,sw,ta,ti,tr,uk,ur,vi,yo,zh-CN',autoDisplay:false},'gt');}catch(e){}
+};
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</helmet>
+
+<div style="display:flex;align-items:flex-start;min-height:100vh;background:var(--color-bg)">
+
+  <aside class="no-print rail" style="width:280px;flex:0 0 280px;height:100vh;overflow-y:auto;position:sticky;top:0;padding:26px 22px 40px;background:#F4F7F3;border-right:3px solid {{ accent }};display:{{ railDisp }}">
+    <img src="assets/logo-cocon-sante.png" alt="Le Cocon Santé" style="width:132px;height:auto;display:block;margin:0 0 14px -6px" />
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#157A42">Programme-cadre de l'Ontario</div>
+    <div style="font-family:var(--font-heading);font-weight:600;font-size:26px;line-height:1.05;letter-spacing:-.5px;margin-top:6px">Santé<br>1<sup style="font-size:.55em">re</sup> à 6<sup style="font-size:.55em">e</sup></div>
+    <div style="font-size:13px;color:var(--color-neutral-700);margin-top:8px;font-style:italic">Vie saine · domaine D · mini-leçons et activités</div>
+
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600);margin:30px 0 10px">Année</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <sc-for list="{{ grades }}" as="g" hint-placeholder-count="6">
+        <button type="button" onClick="{{ g.click }}" title="{{ g.title }}" style="font-family:var(--font-heading);font-size:16px;width:34px;height:34px;cursor:pointer;border-radius:2px;border:1px solid {{ g.bd }};background:{{ g.bg }};color:{{ g.fg }}">{{ g.n }}</button>
+      </sc-for>
+    </div>
+
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600);margin:28px 0 8px">Modules</div>
+    <nav style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ mods }}" as="m" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;margin-bottom:6px">
+          <button type="button" onClick="{{ m.click }}" style="display:flex;align-items:center;gap:9px;text-align:left;border:0;cursor:pointer;padding:6px 8px;border-radius:2px;font-family:var(--font-heading);font-size:16.5px;line-height:1.25;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.w }}">
+            <span style="width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:{{ m.dot }}"></span>
+            <span style="flex:1;min-width:0">{{ m.name }}</span>
+          </button>
+          <sc-if value="{{ m.open }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:1px;padding-left:2px;margin:2px 0 6px">
+              <sc-for list="{{ m.seances }}" as="s" hint-placeholder-count="4">
+                <button type="button" onClick="{{ s.click }}" style="display:flex;gap:8px;text-align:left;border:0;background:none;cursor:pointer;padding:4px 0;font-size:14px;line-height:1.3;color:{{ s.fg }};font-style:{{ s.it }}">
+                  <span style="color:var(--color-neutral-500);font-variant-numeric:tabular-nums">{{ s.n }}</span>
+                  <span style="flex:1;min-width:0">{{ s.t }}</span>
+                  <span style="color:#157A42">{{ s.tick }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="margin-top:26px;font-size:12.5px;color:var(--color-neutral-700);line-height:1.5">{{ progressLabel }}</div>
+  </aside>
+
+  <main style="flex:1;min-width:0">
+
+    <div class="no-print topbar" style="position:sticky;top:0;z-index:20;border-top:5px solid {{ accent }};background:color-mix(in srgb, var(--color-bg) 92%, transparent);backdrop-filter:blur(6px);padding:10px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <button type="button" onClick="{{ toggleRail }}" style="border:0;background:none;cursor:pointer;font-family:var(--font-heading);font-size:15px;color:#157A42">☰</button>
+      <div style="flex:1;min-width:140px;font-size:13px;color:var(--color-neutral-700)">{{ crumb }}</div>
+      <button type="button" onClick="{{ toggleAlf }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 12px;cursor:pointer;border-radius:2px;border:1px solid {{ alfBd }};background:{{ alfBg }};color:{{ alfFg }}">{{ alfLabel }}</button>
+      <button type="button" onClick="{{ toggleProj }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 12px;cursor:pointer;border-radius:2px;border:1px solid {{ projBd }};background:{{ projBg }};color:{{ projFg }}">Projection</button>
+      <button type="button" onClick="{{ toggleTools }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 12px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">Outils</button>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span style="font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--color-neutral-600)">Traduire</span>
+        <div id="gt"></div>
+        <button type="button" onClick="{{ resetFr }}" title="Revenir au français" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 12px;cursor:pointer;border-radius:2px;border:1px solid #157A42;background:transparent;color:#157A42">Français</button>
+      </div>
+    </div>
+
+    <sc-if value="{{ toolsOpen }}" hint-placeholder-val="{{ false }}">
+      <div class="no-print" style="padding:6px 26px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:26px;background:var(--color-neutral-100)">
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">Minuteur de séance</div>
+          <div style="font-family:var(--font-heading);font-size:40px;line-height:1;font-variant-numeric:tabular-nums;color:{{ timerFg }}">{{ timerLabel }}</div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <button type="button" onClick="{{ timerToggle }}" style="font-family:var(--font-heading);font-size:14px;padding:4px 12px;cursor:pointer;border-radius:2px;border:1px solid #157A42;background:#157A42;color:#fff">{{ timerBtn }}</button>
+            <button type="button" onClick="{{ timerReset }}" style="font-family:var(--font-heading);font-size:14px;padding:4px 12px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">30:00</button>
+            <button type="button" onClick="{{ timerFive }}" style="font-family:var(--font-heading);font-size:14px;padding:4px 12px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">+5 min</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">Élève au hasard</div>
+          <div style="font-family:var(--font-heading);font-size:26px;line-height:1.15;color:#C13A70;min-height:32px">{{ picked }}</div>
+          <textarea onChange="{{ setRoster }}" placeholder="Un prénom par ligne" style="width:100%;height:64px;margin-top:6px;font-family:var(--font-body);font-size:13px;padding:6px;border:1px solid var(--color-neutral-400);border-radius:2px;background:#fff;resize:vertical" value="{{ roster }}"></textarea>
+          <button type="button" onClick="{{ pick }}" style="margin-top:6px;font-family:var(--font-heading);font-size:14px;padding:4px 12px;cursor:pointer;border-radius:2px;border:1px solid #157A42;background:transparent;color:#157A42">Piger un nom</button>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">Mes notes, cette séance</div>
+          <textarea onChange="{{ setNote }}" placeholder="Ce qui a fonctionné, ce qu'il faut ajuster…" style="width:100%;height:104px;font-family:var(--font-body);font-size:13.5px;padding:8px;border:1px solid var(--color-neutral-400);border-radius:2px;background:#fff;resize:vertical" value="{{ note }}"></textarea>
+        </div>
+      </div>
+    </sc-if>
+
+    <div class="sheet" style="width:100%;max-width:1080px;margin:0 auto;padding:22px clamp(16px,4vw,48px) 90px;font-size:{{ fs }}">
+
+      <sc-if value="{{ isMissing }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:70px 0">
+          <div style="font-family:var(--font-heading);font-size:30px;line-height:1.1">{{ missingTitle }}</div>
+          <p style="max-width:min(100%,56ch);color:var(--color-neutral-700)">Cette année est en cours de rédaction. Les cinq modules et leurs vingt séances y seront ajoutés selon la même structure que la 1<sup>re</sup> année.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPrint }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div class="no-print" style="display:flex;gap:10px;margin-bottom:24px">
+            <button type="button" onClick="{{ doPrint }}" style="font-family:var(--font-heading);font-size:15px;padding:6px 16px;cursor:pointer;border-radius:2px;border:1px solid #157A42;background:#157A42;color:#fff">Imprimer / PDF</button>
+            <button type="button" onClick="{{ closePrint }}" style="font-family:var(--font-heading);font-size:15px;padding:6px 16px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">Retour</button>
+          </div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">{{ pdKicker }}</div>
+          <h1 style="font-family:var(--font-heading);font-weight:600;font-size:32px;line-height:1.1;letter-spacing:-.6px;margin:6px 0 4px;text-wrap:pretty">{{ pdTitle }}</h1>
+          <div style="font-size:14px;color:var(--color-neutral-700);font-style:italic;margin-bottom:26px">{{ pdSub }}</div>
+          <sc-for list="{{ pdBlocks }}" as="b" hint-placeholder-count="4">
+            <div style="margin-bottom:24px;break-inside:avoid">
+              <div style="font-family:var(--font-heading);font-size:19px;font-weight:600;margin-bottom:6px">{{ b.h }}</div>
+              <sc-for list="{{ b.lines }}" as="l" hint-placeholder-count="3">
+                <div style="display:flex;gap:10px;margin-bottom:5px;font-size:15px;line-height:1.5">
+                  <span style="color:#157A42;flex:0 0 auto">{{ l.mark }}</span>
+                  <span style="flex:1;min-width:0"><strong style="font-weight:600">{{ l.strong }}</strong>{{ l.t }}</span>
+                </div>
+              </sc-for>
+              <sc-if value="{{ b.rule }}" hint-placeholder-val="{{ false }}">
+                <div style="height:1px;background:var(--color-neutral-300);margin-top:16px"></div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <div style="margin-top:30px;font-size:12px;color:var(--color-neutral-600)">{{ pdFoot }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOv }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="width:64px;height:6px;background:{{ accent }};margin-bottom:16px"></div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:{{ accent }}">{{ ov.kicker }}</div>
+          <h1 style="font-family:var(--font-heading);font-weight:600;font-size:44px;line-height:1.05;letter-spacing:-1px;margin:8px 0 0;max-width:min(100%,16ch);text-wrap:pretty">{{ ov.name }}</h1>
+          <p style="font-size:19px;line-height:1.45;font-style:italic;color:#157A42;max-width:min(100%,34ch);margin:14px 0 0">{{ ov.essential }}</p>
+          <p style="max-width:min(100%,70ch);margin:20px 0 0;color:var(--color-neutral-800)">{{ ov.intro }}</p>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Le soin des élèves</div>
+          <p style="max-width:min(100%,70ch);margin:8px 0 0;color:var(--color-neutral-800)">{{ ov.care }}</p>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Les quatre séances</div>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-top:12px">
+            <sc-for list="{{ ov.cards }}" as="c" hint-placeholder-count="4">
+              <button type="button" onClick="{{ c.click }}" style="display:flex;gap:18px;align-items:baseline;text-align:left;border:0;background:none;cursor:pointer;padding:12px 0;font-family:inherit;color:var(--color-text)" style-hover="background:#EAF4EE">
+                <span style="font-family:var(--font-heading);font-size:30px;color:{{ accent }};flex:0 0 34px;font-variant-numeric:tabular-nums">{{ c.n }}</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-family:var(--font-heading);font-size:22px;line-height:1.2;letter-spacing:-.3px">{{ c.t }}</span>
+                  <span style="display:block;font-size:15px;color:var(--color-neutral-700);font-style:italic">{{ c.s }}</span>
+                </span>
+                <span style="flex:0 0 auto;font-size:12.5px;letter-spacing:1px;color:#157A42">{{ c.c }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:38px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Le mini-projet du module</div>
+          <div style="font-family:var(--font-heading);font-size:26px;line-height:1.15;margin-top:8px">{{ ov.projT }}</div>
+          <div style="font-size:14.5px;color:var(--color-neutral-700);margin-top:4px">Matériel : {{ ov.projMat }}</div>
+          <ol style="margin:12px 0 0;padding-left:20px;max-width:min(100%,68ch)">
+            <sc-for list="{{ ov.projSteps }}" as="p" hint-placeholder-count="4">
+              <li style="margin-bottom:6px">{{ p.t }}</li>
+            </sc-for>
+          </ol>
+          <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap" class="no-print">
+            <button type="button" onClick="{{ ov.printProj }}" style="font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid #157A42;background:transparent;color:#157A42">Imprimer le mini-projet</button>
+            <button type="button" onClick="{{ ov.printVocab }}" style="font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid #157A42;background:transparent;color:#157A42">Banque de vocabulaire EPAF</button>
+            <button type="button" onClick="{{ ov.printLettre }}" style="font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid #C13A70;background:transparent;color:#C13A70">Lettre aux familles</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSeance }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="width:64px;height:6px;background:{{ accent }};margin-bottom:16px"></div>
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+            <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:{{ accent }}">{{ se.kicker }}</div>
+            <div style="font-size:12.5px;letter-spacing:1px;color:#C13A70">{{ se.codes }}</div>
+            <div style="font-size:12.5px;color:var(--color-neutral-600)">30 minutes</div>
+          </div>
+          <h1 style="font-family:var(--font-heading);font-weight:600;font-size:42px;line-height:1.05;letter-spacing:-1px;margin:8px 0 0;max-width:min(100%,18ch);text-wrap:pretty">{{ se.t }}</h1>
+          <div style="font-size:19px;font-style:italic;color:var(--color-neutral-700);margin-top:6px">{{ se.s }}</div>
+
+          <div class="no-print" style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+            <button type="button" onClick="{{ se.toggleDone }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid {{ se.doneBd }};background:{{ se.doneBg }};color:{{ se.doneFg }}">{{ se.doneLabel }}</button>
+            <button type="button" onClick="{{ se.printPlan }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">Plan de leçon</button>
+            <button type="button" onClick="{{ se.printFiche }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">Fiche élève</button>
+            <button type="button" onClick="{{ se.printProj }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">Mini-projet</button>
+            <button type="button" onClick="{{ se.printVocab }}" style="white-space:nowrap;font-family:var(--font-heading);font-size:14px;padding:5px 14px;cursor:pointer;border-radius:2px;border:1px solid var(--color-neutral-400);background:transparent;color:var(--color-text)">Vocabulaire EPAF</button>
+          </div>
+
+          <div style="margin-top:38px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Idée maîtresse</div>
+          <p style="font-family:var(--font-heading);font-size:24px;line-height:1.3;max-width:min(100%,26ch);margin:8px 0 0;text-wrap:pretty">{{ se.idea }}</p>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Objectif SMART</div>
+          <p style="max-width:min(100%,70ch);margin:8px 0 0">{{ se.smart }}</p>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">{{ se.vocabLabel }}</div>
+          <div class="cols2" style="margin-top:10px;gap:4px 46px">
+            <sc-for list="{{ se.vocab }}" as="v" hint-placeholder-count="4">
+              <div style="padding:5px 0"><span style="font-weight:600">{{ v.m }}</span><span style="color:var(--color-neutral-700)">, {{ v.d }}</span></div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">{{ se.miniLabel }}</div>
+          <div style="max-width:min(100%,68ch);margin-top:10px;border-left:3px solid {{ accent }};padding-left:18px">
+            <sc-for list="{{ se.mini }}" as="p" hint-placeholder-count="4">
+              <p style="margin:0 0 10px">{{ p.t }}</p>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ se.hasPhrases }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="margin-top:30px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Phrases-cadres à afficher</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+                <sc-for list="{{ se.phrases }}" as="p" hint-placeholder-count="3">
+                  <span style="font-family:var(--font-heading);font-size:17px;padding:5px 14px;background:#EAF4EE;color:#0E5C2E;border-radius:2px">{{ p.t }}</span>
+                </sc-for>
+              </div>
+              <div style="margin-top:14px;max-width:min(100%,68ch);font-size:15px;color:var(--color-neutral-800)"><span style="font-weight:600">Appui : </span>{{ se.appui }}</div>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Déroulement des 30 minutes</div>
+          <div style="margin-top:12px;max-width:min(100%,72ch)">
+            <sc-for list="{{ se.flow }}" as="f" hint-placeholder-count="4">
+              <div style="display:flex;gap:20px;padding:12px 0;align-items:baseline">
+                <div style="flex:0 0 86px;text-align:right">
+                  <div style="font-family:var(--font-heading);font-size:22px;line-height:1;font-variant-numeric:tabular-nums">{{ f.min }}</div>
+                  <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-neutral-600)">{{ f.range }}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-family:var(--font-heading);font-size:18px;line-height:1.25">{{ f.ti }}</div>
+                  <sc-for list="{{ f.steps }}" as="st" hint-placeholder-count="2">
+                    <div style="font-size:15px;color:var(--color-neutral-800);margin-top:3px">{{ st.t }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Activité ludique</div>
+          <div style="font-family:var(--font-heading);font-size:26px;line-height:1.15;margin-top:8px">{{ se.gameT }}</div>
+          <div style="font-size:14.5px;color:var(--color-neutral-700);margin-top:2px">Matériel : {{ se.gameMat }}</div>
+          <ol style="margin:12px 0 0;padding-left:20px;max-width:min(100%,68ch)">
+            <sc-for list="{{ se.gameSteps }}" as="g" hint-placeholder-count="4">
+              <li style="margin-bottom:6px">{{ g.t }}</li>
+            </sc-for>
+          </ol>
+
+          <sc-if value="{{ se.isProjSeance }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C13A70">Mini-projet à réaliser dans la séance</div>
+              <div style="font-family:var(--font-heading);font-size:26px;line-height:1.15;margin-top:8px">{{ se.projT }}</div>
+              <div style="font-size:14.5px;color:var(--color-neutral-700);margin-top:2px">Matériel : {{ se.projMat }}</div>
+              <ol style="margin:12px 0 0;padding-left:20px;max-width:min(100%,68ch)">
+                <sc-for list="{{ se.projSteps }}" as="p" hint-placeholder-count="4">
+                  <li style="margin-bottom:6px">{{ p.t }}</li>
+                </sc-for>
+              </ol>
+              <div style="margin-top:12px;font-size:14.5px;color:var(--color-neutral-800);max-width:min(100%,68ch)">Réussi si : {{ se.projCrit }}</div>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Questions de discussion</div>
+          <div class="cols2" style="margin-top:10px">
+            <sc-for list="{{ se.disc }}" as="d" hint-placeholder-count="3">
+              <div style="padding:9px 0">
+                <div style="font-family:var(--font-heading);font-size:18px;line-height:1.3">{{ d.q }}</div>
+                <div style="font-size:15px;color:var(--color-neutral-700);margin-top:2px">{{ d.a }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div class="cols2" style="margin-top:34px">
+            <div>
+              <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Billet de sortie</div>
+              <p style="margin:8px 0 0">{{ se.exitT }}</p>
+              <p style="margin:6px 0 0;font-size:14.5px;color:var(--color-neutral-700)">{{ se.exitLook }}</p>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C13A70">Retour émotionnel</div>
+              <p style="margin:8px 0 0;font-style:italic">{{ se.feelQ }}</p>
+              <p style="margin:6px 0 0;font-size:14.5px;color:var(--color-neutral-700)">{{ se.feelNote }}</p>
+            </div>
+          </div>
+
+          <div style="margin-top:34px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Adaptations</div>
+          <div class="cols2" style="margin-top:10px">
+            <sc-for list="{{ se.adapt }}" as="a" hint-placeholder-count="3">
+              <div style="padding:5px 0"><span style="font-weight:600">{{ a.k }}</span><span style="color:var(--color-neutral-800)"> : {{ a.v }}</span></div>
+            </sc-for>
+          </div>
+
+          <div class="cols2" style="margin-top:34px">
+            <div>
+              <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Lien avec la maison</div>
+              <p style="margin:8px 0 0">{{ se.home }}</p>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--color-neutral-600)">Ancrage culturel</div>
+              <p style="margin:8px 0 0">{{ se.cult }}</p>
+            </div>
+          </div>
+
+          <div class="no-print" style="display:flex;justify-content:space-between;gap:16px;margin-top:56px">
+            <button type="button" onClick="{{ se.prev }}" style="font-family:var(--font-heading);font-size:16px;border:0;background:none;cursor:pointer;color:#157A42;text-align:left">{{ se.prevLabel }}</button>
+            <button type="button" onClick="{{ se.next }}" style="font-family:var(--font-heading);font-size:16px;border:0;background:none;cursor:pointer;color:#157A42;text-align:right">{{ se.nextLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { g:1, mi:0, si:"ov", data:null, missing:false, alf:false, proj:false, tools:false,
+            print:null, rail:true, done:{}, notes:{}, roster:"", picked:"-", t:1800, run:false };
+
+  componentDidMount(){
+    try{
+      const d = JSON.parse(localStorage.getItem("so16-done")||"{}");
+      const n = JSON.parse(localStorage.getItem("so16-notes")||"{}");
+      const r = localStorage.getItem("so16-roster")||"";
+      this.setState({done:d, notes:n, roster:r});
+    }catch(e){}
+    this.load(1);
+    this.tick = setInterval(()=>{ if(this.state.run && this.state.t>0) this.setState(s=>({t:s.t-1})); }, 1000);
+    if (window.innerWidth < 1100) this.setState({rail:false});
+  }
+  componentWillUnmount(){ clearInterval(this.tick); }
+
+  async load(g){
+    this.setState({data:null, missing:false});
+    try{
+      const m = await import(`./data/g${g}.js`);
+      this.setState({data:m.GRADE, missing:false});
+    }catch(e){ this.setState({data:null, missing:true}); }
+  }
+  go(g){ this.setState({g, mi:0, si:"ov", print:null}); this.load(g); window.scrollTo(0,0); }
+  key(){ return `${this.state.g}-${this.state.mi}-${this.state.si}`; }
+  save(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+  mod(){ const d=this.state.data; return d ? d.modules[this.state.mi] : null; }
+  sess(){ const m=this.mod(); return (m && typeof this.state.si==="number") ? m.sessions[this.state.si] : null; }
+
+  vocabBank(){
+    const d=this.state.data; if(!d) return [];
+    const out=[];
+    d.modules.forEach(m=>m.sessions.forEach((s,i)=>{
+      out.push({h:`${m.short} · séance ${i+1}, ${s.t}`, lines:s.alf.mots.map(v=>({mark:"·",strong:v[0],t:" : "+v[1]})).concat(s.alf.phrases.map(p=>({mark:"›",strong:"",t:p})))});
+    }));
+    return out;
+  }
+
+  printDoc(){
+    const k=this.state.print, m=this.mod(), s=this.sess(), d=this.state.data;
+    if(!k||!d) return null;
+    const foot = `Santé Ontario 1–6 · ${d.label} · ${m?m.name:""} · programme-cadre d'éducation physique et santé de l'Ontario (2019), domaine D.`;
+    if(k==="vocab") return {kicker:"Banque de vocabulaire EPAF", title:`Vocabulaire EPAF · ${d.label}`, sub:"Mots et phrases-cadres à afficher, à plastifier ou à coller dans le cahier de l'élève.", blocks:this.vocabBank(), foot};
+    if(k==="lettre"){
+      return {kicker:"Information aux familles", title:`${m.name}`, sub:`${d.label} · lettre à remettre avant le début du module`, foot, blocks:[
+        {h:"Chers parents, chère famille", lines:[{mark:"",strong:"",t:`Au cours des prochaines semaines, votre enfant suivra quatre courtes leçons de santé portant sur le thème suivant : ${m.name.toLowerCase()}. Ces leçons font partie du programme-cadre d'éducation physique et santé de l'Ontario, domaine D (Vie saine), et couvrent les attentes ${m.curr}.`}]},
+        {h:"Question au cœur du module", lines:[{mark:"·",strong:"",t:m.essential}]},
+        {h:"Ce que votre enfant apprendra", lines:m.sessions.map((se,i)=>({mark:String(i+1)+".",strong:se.t+" : ",t:se.s}))},
+        {h:"Notre engagement", lines:[{mark:"·",strong:"",t:m.care},{mark:"·",strong:"",t:"Les leçons présentent des renseignements factuels, adaptés à l'âge des élèves, dans un climat respectueux. Aucun élève n'est tenu de parler de sa vie privée ou de celle de sa famille."}]},
+        {h:"Le mini-projet", lines:[{mark:"·",strong:m.proj.t+" : ",t:"réalisé en classe pendant une séance. Votre enfant pourra vous le présenter à la maison."}]},
+        {h:"Vos questions", lines:[{mark:"",strong:"",t:"Si vous avez des questions sur le contenu ou souhaitez consulter les documents utilisés, communiquez avec l'enseignante ou l'enseignant de votre enfant. Vous pouvez aussi consulter le programme-cadre sur le site du ministère de l'Éducation de l'Ontario."}]},
+        {h:"", lines:[{mark:"",strong:"Nom de l'enseignant(e) : ",t:"_______________________________     Date : ______________"},{mark:"",strong:"Signature du parent ou tuteur : ",t:"____________________________________"}]}]};
+    }
+    if(k==="proj"){
+      const p=m.proj;
+      return {kicker:`Mini-projet · ${m.short}`, title:p.t, sub:`${d.label}, à réaliser en une séance de 30 minutes`, foot, blocks:[
+        {h:"Matériel", lines:[{mark:"·",strong:"",t:p.mat}]},
+        {h:"Marche à suivre", lines:p.steps.map((x,i)=>({mark:String(i+1)+".",strong:"",t:x}))},
+        {h:"Réussi si", lines:p.crit.map(x=>({mark:"✓",strong:"",t:x}))},
+        {h:"Mon projet", lines:[{mark:"",strong:"Nom : ",t:"__________________________     Date : __________________"}]}]};
+    }
+    if(!s) return null;
+    if(k==="fiche") return {kicker:`Fiche élève · ${m.short}`, title:s.t, sub:s.s, foot, blocks:[
+      {h:"Les mots de la séance", lines:s.vocab.map(v=>({mark:"·",strong:v[0],t:" : "+v[1]}))},
+      {h:s.game.t, lines:[{mark:"",strong:"Matériel : ",t:s.game.mat}].concat(s.game.steps.map((x,i)=>({mark:String(i+1)+".",strong:"",t:x})))},
+      {h:"J'y réfléchis", lines:s.disc.map(q=>({mark:"?",strong:"",t:q[0]+"   ______________________________________"}))},
+      {h:"Billet de sortie", lines:[{mark:"→",strong:"",t:s.exit.t},{mark:"",strong:"",t:"____________________________________________________________"},{mark:"",strong:"",t:"____________________________________________________________"}]},
+      {h:"Comment je me sens", lines:[{mark:"♡",strong:"",t:s.feel.q},{mark:"",strong:"",t:"☺   ☹   😐   (entoure)   ____________________________________"}]}]};
+    if(k==="plan") return {kicker:`Plan de leçon · ${m.short}`, title:s.t, sub:`${d.label}, ${s.c}, 30 minutes`, foot, blocks:[
+      {h:"Idée maîtresse", lines:[{mark:"·",strong:"",t:s.idea}]},
+      {h:"Objectif SMART", lines:[{mark:"·",strong:"",t:s.smart}]},
+      {h:"Vocabulaire", lines:s.vocab.map(v=>({mark:"·",strong:v[0],t:" : "+v[1]}))},
+      {h:"Mini-leçon à dire", lines:s.mini.map(x=>({mark:"«",strong:"",t:x}))},
+      {h:"Déroulement", lines:s.flow.map(f=>({mark:String(f[0])+" min",strong:f[1],t:" : "+f.slice(2).join(" ")}))},
+      {h:"Activité : "+s.game.t, lines:[{mark:"",strong:"Matériel : ",t:s.game.mat}].concat(s.game.steps.map((x,i)=>({mark:String(i+1)+".",strong:"",t:x})))},
+      {h:"Discussion", lines:s.disc.map(q=>({mark:"?",strong:q[0],t:" → "+q[1]}))},
+      {h:"Billet de sortie", lines:[{mark:"→",strong:"",t:s.exit.t},{mark:"✓",strong:"",t:s.exit.look}]},
+      {h:"Retour émotionnel", lines:[{mark:"♡",strong:"",t:s.feel.q},{mark:"!",strong:"",t:s.feel.note}]},
+      {h:"Adaptations", lines:s.adapt.map(a=>({mark:"·",strong:a[0],t:" : "+a[1]}))},
+      {h:"Différenciation EPAF", lines:[{mark:"·",strong:"Idée simplifiée : ",t:s.alf.idea}].concat(s.alf.mots.map(v=>({mark:"·",strong:v[0],t:" : "+v[1]}))).concat(s.alf.phrases.map(p=>({mark:"›",strong:"",t:p}))).concat([{mark:"·",strong:"Appui : ",t:s.alf.appui}])},
+      {h:"Ancrage culturel", lines:[{mark:"·",strong:"",t:s.cult}]},
+      {h:"Lien avec la maison", lines:[{mark:"·",strong:"",t:s.home}]}]};
+    return null;
+  }
+
+  renderVals(){
+    const st=this.state, d=st.data, m=this.mod(), s=this.sess(), alf=st.alf;
+    const on=(b,c)=>b?{bg:c,fg:"#fff",bd:c}:{bg:"transparent",fg:"var(--color-text)",bd:"var(--color-neutral-400)"};
+    const a=on(alf,"#C13A70"), p=on(st.proj,"#157A42");
+    const mm=String(Math.floor(st.t/60)).padStart(2,"0"), ss=String(st.t%60).padStart(2,"0");
+
+    const MODC = ["#157A42","#0E5C63","#B22B62","#ED5A92","#6D4A7D"];
+    const accent = MODC[st.mi % MODC.length];
+
+    const v = {
+      accent,
+      resetFr: ()=>{
+        const kill=(dom)=>{ document.cookie = "googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/" + (dom?(";domain="+dom):""); };
+        kill(); kill(location.hostname); kill("."+location.hostname);
+        const c=document.querySelector(".goog-te-combo");
+        if(c){ c.value=""; c.dispatchEvent(new Event("change")); }
+        setTimeout(()=>location.reload(), 200);
+      },
+      railDisp: st.rail?"block":"none",
+      toggleRail: ()=>this.setState(x=>({rail:!x.rail})),
+      toggleAlf: ()=>this.setState(x=>({alf:!x.alf})),
+      toggleProj: ()=>this.setState(x=>({proj:!x.proj})),
+      toggleTools: ()=>this.setState(x=>({tools:!x.tools})),
+      alfLabel: alf?"Version EPAF active":"Version EPAF",
+      alfBg:a.bg, alfFg:a.fg, alfBd:a.bd, projBg:p.bg, projFg:p.fg, projBd:p.bd,
+      fs: st.proj?"22px":"16.5px",
+      timerLabel:`${mm}:${ss}`, timerBtn: st.run?"Pause":"Départ",
+      timerFg: st.t<=60?"#C13A70":"var(--color-text)",
+      timerToggle: ()=>this.setState(x=>({run:!x.run})),
+      timerReset: ()=>this.setState({t:1800,run:false}),
+      timerFive: ()=>this.setState(x=>({t:x.t+300})),
+      roster: st.roster, picked: st.picked,
+      setRoster: e=>{ const val=e.target.value; this.setState({roster:val}); try{localStorage.setItem("so16-roster",val);}catch(err){} },
+      pick: ()=>{ const l=st.roster.split(/[\n,;]/).map(x=>x.trim()).filter(Boolean); this.setState({picked: l.length?l[Math.floor(Math.random()*l.length)]:"Ajoute des prénoms"}); },
+      note: st.notes[this.key()]||"",
+      setNote: e=>{ const n={...st.notes}; n[this.key()]=e.target.value; this.setState({notes:n}); this.save("so16-notes",n); },
+      toolsOpen: st.tools,
+      grades: [1,2,3,4,5,6].map(n=>{
+        const cur=n===st.g;
+        return {n, title:`${n}re/e année`, click:()=>this.go(n),
+          bg: cur?"#157A42":"transparent", fg: cur?"#fff":"var(--color-text)",
+          bd: cur?"#157A42":"var(--color-neutral-400)"};
+      }),
+      isMissing: st.missing, missingTitle:`${st.g}e année`,
+      isPrint: !!st.print,
+      doPrint: ()=>window.print(),
+      closePrint: ()=>this.setState({print:null}),
+      mods: [], crumb:"", progressLabel:"", isOv:false, isSeance:false, ov:{}, se:{}
+    };
+    if(st.g===1) v.missingTitle = "1re année";
+
+    if(d){
+      let doneCount=0, total=0;
+      d.modules.forEach((mo,i)=>mo.sessions.forEach((se,j)=>{ total++; if(st.done[`${st.g}-${i}-${j}`]) doneCount++; }));
+      v.progressLabel = `${doneCount} des ${total} séances marquées faites en ${d.label}.`;
+      v.mods = d.modules.map((mo,i)=>({
+        name: mo.short, open: i===st.mi, w: i===st.mi?"600":"400",
+        dot: MODC[i % MODC.length],
+        bg: i===st.mi? ("color-mix(in srgb, "+MODC[i%MODC.length]+" 14%, transparent)") : "transparent",
+        fg: i===st.mi? MODC[i % MODC.length] : "var(--color-text)",
+        click: ()=>{ this.setState({mi:i, si:"ov", print:null}); window.scrollTo(0,0); },
+        seances: mo.sessions.map((se,j)=>({
+          n:j+1, t:se.t, tick: st.done[`${st.g}-${i}-${j}`]?"✓":"",
+          it: (i===st.mi && st.si===j)?"italic":"normal",
+          fg: (i===st.mi && st.si===j)? MODC[i % MODC.length] : "var(--color-neutral-800)",
+          click: ()=>{ this.setState({mi:i, si:j, print:null}); window.scrollTo(0,0); }
+        }))
+      }));
+      v.crumb = `${d.label} · ${m?m.name:""}`;
+
+      const pd=this.printDoc();
+      if(pd){
+        v.pdKicker=pd.kicker; v.pdTitle=pd.title; v.pdSub=pd.sub; v.pdFoot=pd.foot;
+        v.pdBlocks=pd.blocks.map((b,i)=>({h:b.h, rule:i<pd.blocks.length-1, lines:b.lines.map(l=>({mark:l.mark,strong:l.strong,t:l.t}))}));
+      }
+
+      if(!st.print && st.si==="ov" && m){
+        v.isOv=true;
+        v.ov={ kicker:`${d.label} · module ${st.mi+1} sur 5 · ${m.curr}`, name:m.name, essential:m.essential,
+          intro:m.intro, care:m.care, projT:m.proj.t, projMat:m.proj.mat,
+          projSteps:m.proj.steps.map(x=>({t:x})),
+          printProj:()=>this.setState({print:"proj"}), printVocab:()=>this.setState({print:"vocab"}),
+          printLettre:()=>this.setState({print:"lettre"}),
+          cards:m.sessions.map((se,j)=>({n:j+1, t:se.t, s:se.s, c:se.c, click:()=>{ this.setState({si:j}); window.scrollTo(0,0); }}))};
+      }
+
+      if(!st.print && s){
+        v.isSeance=true;
+        let acc=0; const flow=s.flow.map(f=>{ const st0=acc; acc+=f[0]; return {min:`${f[0]} min`, range:`${st0} à ${acc}`, ti:f[1], steps:f.slice(2).map(x=>({t:x}))}; });
+        const last = st.si===m.sessions.length-1;
+        const dk = st.done[this.key()];
+        v.se={
+          kicker:`${d.label} · ${m.short} · séance ${st.si+1} sur ${m.sessions.length}`, codes:s.c,
+          t:s.t, s:s.s,
+          idea: alf? s.alf.idea : s.idea, smart:s.smart,
+          vocabLabel: alf?"Mots essentiels (version EPAF)":"Vocabulaire clé",
+          vocab: (alf? s.alf.mots : s.vocab).map(x=>({m:x[0], d:x[1]})),
+          miniLabel: alf?"Mini-leçon simplifiée à dire":"Mini-leçon à dire à voix haute",
+          mini: (alf? [s.alf.idea, s.alf.appui] : s.mini).map(x=>({t:x})),
+          hasPhrases: alf, phrases: s.alf.phrases.map(x=>({t:x})), appui:s.alf.appui,
+          flow, gameT:s.game.t, gameMat:s.game.mat, gameSteps:s.game.steps.map(x=>({t:x})),
+          isProjSeance: last, projT:m.proj.t, projMat:m.proj.mat,
+          projSteps:m.proj.steps.map(x=>({t:x})), projCrit:m.proj.crit.join(" · "),
+          disc:s.disc.map(x=>({q:x[0], a:x[1]})),
+          exitT:s.exit.t, exitLook:s.exit.look,
+          feelQ:s.feel.q, feelNote:s.feel.note,
+          adapt:s.adapt.map(x=>({k:x[0], v:x[1]})),
+          home:s.home, cult:s.cult,
+          doneLabel: dk?"✓ Séance faite":"Marquer comme faite",
+          doneBg: dk?"#157A42":"transparent", doneFg: dk?"#fff":"#157A42",
+          doneBd:"#157A42",
+          toggleDone: ()=>{ const n={...st.done}; const k=this.key(); if(n[k]) delete n[k]; else n[k]=1; this.setState({done:n}); this.save("so16-done",n); },
+          printPlan:()=>this.setState({print:"plan"}), printFiche:()=>this.setState({print:"fiche"}),
+          printProj:()=>this.setState({print:"proj"}), printVocab:()=>this.setState({print:"vocab"}),
+          prevLabel: st.si>0? "← Séance "+st.si : "← Aperçu du module",
+          nextLabel: last? "Module suivant →" : "Séance "+(st.si+2)+" →",
+          prev: ()=>{ this.setState(x=>({si: x.si>0? x.si-1 : "ov"})); window.scrollTo(0,0); },
+          next: ()=>{ if(last){ this.setState(x=>({mi: Math.min(x.mi+1, d.modules.length-1), si:"ov"})); } else { this.setState(x=>({si:x.si+1})); } window.scrollTo(0,0); }
+        };
+      }
+    }
+    return v;
+  }
+}
+</script>
+</body>
+</html>
